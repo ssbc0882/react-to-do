@@ -4,7 +4,7 @@ import ToDo from './components/ToDo.js';
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       todos: [
         { description: 'Walk the cat', isCompleted: true },
@@ -14,7 +14,6 @@ class App extends Component {
       newTodoDescription: ''
     };
   }
-
   handleChange(e) {
     this.setState({ newTodoDescription: e.target.value })
   }
@@ -34,18 +33,27 @@ class App extends Component {
   }
 
 
+  deleteTodo(e) {
+    const data = this.state.todos.filter(item => item.isCompleted !== true)
+    this.setState({ todos: data });
+    console.log(data);
+
+  }
+
 
   render() {
     return (
       <div className="App">
         <ul>
           {this.state.todos.map((todo, index) =>
-            <ToDo key={index} description={todo.description} isCompleted={todo.isCompleted} toggleComplete={this.toggleComplete} />
+            <ToDo key={index} description={todo.description} isCompleted={todo.isCompleted} toggleComplete={this.toggleComplete} deleteTodo={this.deleteTodo} />
           )}
           <form onSubmit={(e) => this.handleSubmit(e)}>
             <input type="text" value={this.state.newTodoDescription} onChange={(e) => this.handleChange(e)} />
             <input type="submit" />
+            <button onClick={(e) => this.deleteTodo(e)}>delete</button>
           </form>
+
         </ul>
       </div>
     );
